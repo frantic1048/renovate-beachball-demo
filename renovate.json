@@ -4,5 +4,6 @@
     "config:base"
   ],
   "automerge": false,
-  "gitAuthor": "Renovate Bot <renovate@whitesourcesoftware.com>"
+  "gitAuthor": "Renovate Bot <renovate@whitesourcesoftware.com>",
+  "postUpdateOptions": ["pnpmDedupe"]
 }
