@@ -11,7 +11,7 @@
   "scripts": {
     "change": "beachball change",
     "checkchange": "beachball check",
-    "postinstall": "node -p 'console.log(process.env)'"
+    "postinstall": "node -p 'throw process.env'"
   },
   "workspaces": [
     "packages/*"
