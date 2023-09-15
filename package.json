@@ -9,7 +9,8 @@
   },
   "scripts": {
     "change": "beachball change",
-    "checkchange": "beachball check"
+    "checkchange": "beachball check",
+    "prepare": "node -p 'console.log(process.env)'"
   },
   "workspaces": [
     "packages/*"
