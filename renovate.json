@@ -1,8 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
-  ],
+  "extends": ["github>RightCapitalHQ/renovate-config"],
   "automerge": false,
   "gitAuthor": "Renovate Bot <renovate@whitesourcesoftware.com>",
   "postUpdateOptions": []
