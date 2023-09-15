@@ -8,6 +8,15 @@
   "postUpgradeTasks": {
     "commands": [
       "git add --all",
+      "git commit -n 'uwu'",
+      "npx beachball change --no-commit --type patch --message '{{{commitMessage}}}'",
+      "git reset --hard",
+      "npx beachball change --no-commit --type major --message '{{{commitMessage}}}'",
+      "git reset --hard",
+      "npx beachball change --no-commit --type none --message '{{{commitMessage}}}'",
+      "git reset --hard",
+      "git reset HEAD^1",
+      "git add --all",
       "npx beachball change --no-commit --type patch --message '{{{commitMessage}}}'",
       "git reset"
     ],
