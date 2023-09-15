@@ -1,0 +1,31 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.bumpPackageInfoVersion = void 0;
+const semver_1 = __importDefault(require("semver"));
+/**
+ * Bumps an individual package version based on the change type
+ */
+function bumpPackageInfoVersion(pkgName, bumpInfo, options) {
+    const { calculatedChangeTypes, packageInfos, modifiedPackages } = bumpInfo;
+    const info = packageInfos[pkgName];
+    const changeType = calculatedChangeTypes[pkgName];
+    if (!info) {
+        console.log(`Unknown package named "${pkgName}" detected from change files, skipping!`);
+    }
+    else if (changeType === 'none') {
+        console.log(`"${pkgName}" has a "none" change type, no version bump is required.`);
+    }
+    else if (info.private) {
+        console.log(`Skipping bumping private package "${pkgName}"`);
+    }
+    else {
+        // Version should be updated
+        info.version = semver_1.default.inc(info.version, options.prereleasePrefix ? 'prerelease' : changeType, options.prereleasePrefix || undefined);
+        modifiedPackages.add(pkgName);
+    }
+}
+exports.bumpPackageInfoVersion = bumpPackageInfoVersion;
+//# sourceMappingURL=bumpPackageInfoVersion.js.map

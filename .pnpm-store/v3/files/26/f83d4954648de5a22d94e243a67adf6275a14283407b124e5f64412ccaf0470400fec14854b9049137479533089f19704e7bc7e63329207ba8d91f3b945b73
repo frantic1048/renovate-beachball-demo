@@ -1,0 +1,4 @@
+import { BeachballOptions } from '../types/BeachballOptions';
+import { PackageInfos } from '../types/PackageInfo';
+export declare function isChangeFileNeeded(options: BeachballOptions, packageInfos: PackageInfos): boolean;
+//# sourceMappingURL=isChangeFileNeeded.d.ts.map

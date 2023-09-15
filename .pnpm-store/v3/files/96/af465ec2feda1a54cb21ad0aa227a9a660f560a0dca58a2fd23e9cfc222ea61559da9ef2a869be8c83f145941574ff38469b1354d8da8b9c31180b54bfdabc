@@ -1,0 +1,7 @@
+/** Relative path to the change files folder */
+export declare const changeFolder = "change";
+/**
+ * Get the absolute path to the folder containing beachball change files.
+ */
+export declare function getChangePath(cwd: string): string;
+//# sourceMappingURL=paths.d.ts.map

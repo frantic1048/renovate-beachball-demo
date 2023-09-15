@@ -1,0 +1,7 @@
+import { BeachballOptions } from '../types/BeachballOptions';
+/**
+ * Default options.
+ * Note that as of writing, this does not actually set values for all "required" BeachballOptions.
+ */
+export declare function getDefaultOptions(): BeachballOptions;
+//# sourceMappingURL=getDefaultOptions.d.ts.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"publishToRegistry.d.ts","sourceRoot":"","sources":["../../src/publish/publishToRegistry.ts"],"names":[],"mappings":"AAEA,OAAO,EAAE,QAAQ,EAAE,MAAM,mBAAmB,CAAC;AAC7C,OAAO,EAAE,gBAAgB,EAAE,MAAM,2BAA2B,CAAC;AAS7D;;GAEG;AACH,wBAAsB,iBAAiB,CAAC,gBAAgB,EAAE,QAAQ,EAAE,OAAO,EAAE,gBAAgB,GAAG,OAAO,CAAC,IAAI,CAAC,CA4C5G"}

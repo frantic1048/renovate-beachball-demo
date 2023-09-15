@@ -1,0 +1,9 @@
+import execa from 'execa';
+export declare type NpmResult = Awaited<ReturnType<typeof npm>>;
+/**
+ * Run an npm command. Returns the error result instead of throwing on failure.
+ */
+export declare function npm(args: string[], options?: execa.Options): Promise<execa.ExecaReturnValue & {
+    success: boolean;
+}>;
+//# sourceMappingURL=npm.d.ts.map

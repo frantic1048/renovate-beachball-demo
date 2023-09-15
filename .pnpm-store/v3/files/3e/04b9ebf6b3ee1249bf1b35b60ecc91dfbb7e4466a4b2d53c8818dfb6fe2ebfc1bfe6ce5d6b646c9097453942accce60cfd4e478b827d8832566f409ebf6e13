@@ -1,0 +1,35 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.setDependentVersions = void 0;
+const bumpMinSemverRange_1 = require("./bumpMinSemverRange");
+function setDependentVersions(packageInfos, scopedPackages, { verbose }) {
+    const dependentChangedBy = {};
+    for (const [pkgName, info] of Object.entries(packageInfos)) {
+        if (!scopedPackages.has(pkgName)) {
+            continue;
+        }
+        for (const deps of [info.dependencies, info.devDependencies, info.peerDependencies]) {
+            if (!deps) {
+                continue;
+            }
+            for (const [dep, existingVersionRange] of Object.entries(deps)) {
+                const packageInfo = packageInfos[dep];
+                if (!packageInfo) {
+                    continue;
+                }
+                const bumpedVersionRange = (0, bumpMinSemverRange_1.bumpMinSemverRange)(packageInfo.version, existingVersionRange);
+                if (existingVersionRange !== bumpedVersionRange) {
+                    deps[dep] = bumpedVersionRange;
+                    dependentChangedBy[pkgName] ?? (dependentChangedBy[pkgName] = new Set());
+                    dependentChangedBy[pkgName].add(dep);
+                    if (verbose) {
+                        console.log(`${pkgName} needs to be bumped because ${dep} ${existingVersionRange} -> ${bumpedVersionRange}`);
+                    }
+                }
+            }
+        }
+    }
+    return dependentChangedBy;
+}
+exports.setDependentVersions = setDependentVersions;
+//# sourceMappingURL=setDependentVersions.js.map

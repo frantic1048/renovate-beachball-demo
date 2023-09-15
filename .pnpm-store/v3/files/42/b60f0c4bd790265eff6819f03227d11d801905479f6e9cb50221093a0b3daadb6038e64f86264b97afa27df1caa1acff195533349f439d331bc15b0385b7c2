@@ -1,0 +1,30 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.setDependentsInBumpInfo = void 0;
+/**
+ * Gets dependents for all packages
+ *
+ * Example: "BigApp" deps on "SomeUtil", "BigApp" would be the dependent
+ */
+function setDependentsInBumpInfo(bumpInfo) {
+    const { packageInfos, scopedPackages } = bumpInfo;
+    const dependents = {};
+    for (const [pkgName, info] of Object.entries(packageInfos)) {
+        if (!scopedPackages.has(pkgName)) {
+            continue;
+        }
+        for (const deps of [info.dependencies, info.devDependencies, info.peerDependencies]) {
+            for (const dep of Object.keys(deps || {})) {
+                if (packageInfos[dep]) {
+                    dependents[dep] ?? (dependents[dep] = []);
+                    if (!dependents[dep].includes(pkgName)) {
+                        dependents[dep].push(pkgName);
+                    }
+                }
+            }
+        }
+    }
+    bumpInfo.dependents = dependents;
+}
+exports.setDependentsInBumpInfo = setDependentsInBumpInfo;
+//# sourceMappingURL=setDependentsInBumpInfo.js.map

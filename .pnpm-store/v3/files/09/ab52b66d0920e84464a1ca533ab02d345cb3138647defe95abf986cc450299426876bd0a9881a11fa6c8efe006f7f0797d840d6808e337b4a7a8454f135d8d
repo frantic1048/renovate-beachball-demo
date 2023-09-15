@@ -1,0 +1,18 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getNewPackages = void 0;
+const listPackageVersions_1 = require("../packageManager/listPackageVersions");
+async function getNewPackages(bumpInfo, options) {
+    const { modifiedPackages, packageInfos } = bumpInfo;
+    const newPackages = Object.keys(packageInfos).filter(pkg => !modifiedPackages.has(pkg) && !packageInfos[pkg].private);
+    const publishedVersions = await (0, listPackageVersions_1.listPackageVersions)(newPackages, options);
+    return newPackages.filter(pkg => {
+        if (!publishedVersions[pkg]?.length) {
+            console.log(`New package detected: ${pkg}`);
+            return true;
+        }
+        return false;
+    });
+}
+exports.getNewPackages = getNewPackages;
+//# sourceMappingURL=getNewPackages.js.map

@@ -1,0 +1,19 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getChangePath = exports.changeFolder = void 0;
+const path_1 = __importDefault(require("path"));
+const workspace_tools_1 = require("workspace-tools");
+/** Relative path to the change files folder */
+exports.changeFolder = 'change';
+/**
+ * Get the absolute path to the folder containing beachball change files.
+ */
+function getChangePath(cwd) {
+    const root = (0, workspace_tools_1.findProjectRoot)(cwd);
+    return path_1.default.join(root, exports.changeFolder);
+}
+exports.getChangePath = getChangePath;
+//# sourceMappingURL=paths.js.map

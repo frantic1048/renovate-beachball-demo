@@ -1,0 +1,80 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.performBump = exports.updatePackageLock = exports.writePackageJson = void 0;
+const fs_extra_1 = __importDefault(require("fs-extra"));
+const path_1 = __importDefault(require("path"));
+const unlinkChangeFiles_1 = require("../changefile/unlinkChangeFiles");
+const writeChangelog_1 = require("../changelog/writeChangelog");
+const workspace_tools_1 = require("workspace-tools");
+const npm_1 = require("../packageManager/npm");
+const callHook_1 = require("./callHook");
+function writePackageJson(modifiedPackages, packageInfos) {
+    for (const pkgName of modifiedPackages) {
+        const info = packageInfos[pkgName];
+        if (!fs_extra_1.default.existsSync(info.packageJsonPath)) {
+            console.warn(`Skipping ${pkgName} since package.json does not exist`);
+            continue;
+        }
+        const packageJson = fs_extra_1.default.readJSONSync(info.packageJsonPath);
+        if (!info.private) {
+            packageJson.version = info.version;
+        }
+        for (const depKind of ['dependencies', 'devDependencies', 'peerDependencies']) {
+            // updatedDeps contains all of the dependencies in the bump info since the beginning of a build job
+            const updatedDepsVersions = info[depKind];
+            if (updatedDepsVersions) {
+                // to be cautious, only update internal && modifiedPackages, since some other dependency
+                // changes could have occurred since the beginning of the build job and the next merge step
+                // would overwrite those incorrectly!
+                for (const [dep, updatedVersion] of Object.entries(updatedDepsVersions)) {
+                    if (modifiedPackages.has(dep) && packageJson[depKind]?.[dep]) {
+                        packageJson[depKind][dep] = updatedVersion;
+                    }
+                }
+            }
+        }
+        fs_extra_1.default.writeJSONSync(info.packageJsonPath, packageJson, { spaces: 2 });
+    }
+}
+exports.writePackageJson = writePackageJson;
+/**
+ * If `package-lock.json` exists, runs `npm install --package-lock-only` to update it.
+ */
+async function updatePackageLock(cwd) {
+    const root = (0, workspace_tools_1.findProjectRoot)(cwd);
+    if (root && fs_extra_1.default.existsSync(path_1.default.join(root, 'package-lock.json'))) {
+        console.log('Updating package-lock.json after bumping packages');
+        const res = await (0, npm_1.npm)(['install', '--package-lock-only', '--ignore-scripts'], { stdio: 'inherit' });
+        if (!res.success) {
+            console.warn('Updating package-lock.json failed. Continuing...');
+        }
+    }
+}
+exports.updatePackageLock = updatePackageLock;
+/**
+ * Performs the bump, writes to the file system
+ *
+ * deletes change files, update package.json, and changelogs
+ */
+async function performBump(bumpInfo, options) {
+    const { modifiedPackages, packageInfos, changeFileChangeInfos, dependentChangedBy, calculatedChangeTypes } = bumpInfo;
+    await (0, callHook_1.callHook)(options.hooks?.prebump, modifiedPackages, bumpInfo.packageInfos);
+    writePackageJson(modifiedPackages, packageInfos);
+    await updatePackageLock(options.path);
+    if (options.generateChangelog) {
+        // Generate changelog
+        await (0, writeChangelog_1.writeChangelog)(options, changeFileChangeInfos, calculatedChangeTypes, dependentChangedBy, packageInfos);
+    }
+    if (!options.keepChangeFiles) {
+        // Unlink changelogs
+        (0, unlinkChangeFiles_1.unlinkChangeFiles)(changeFileChangeInfos, packageInfos, options.path);
+    }
+    await (0, callHook_1.callHook)(options.hooks?.postbump, modifiedPackages, bumpInfo.packageInfos);
+    // This is returned from bump() for testing
+    return bumpInfo;
+}
+exports.performBump = performBump;
+//# sourceMappingURL=performBump.js.map

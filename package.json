@@ -16,6 +16,6 @@
     "packages/*"
   ],
   "devDependencies": {
-    "beachball": "2.22.2"
+    "beachball": "2.37.0"
   }
 }

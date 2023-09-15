@@ -1,0 +1,27 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.npm = void 0;
+const execa_1 = __importDefault(require("execa"));
+/**
+ * Run an npm command. Returns the error result instead of throwing on failure.
+ */
+async function npm(args, options = {}) {
+    try {
+        const result = await (0, execa_1.default)('npm', args, { ...options });
+        return {
+            ...result,
+            success: !result.failed,
+        };
+    }
+    catch (e) {
+        return {
+            ...e,
+            success: false,
+        };
+    }
+}
+exports.npm = npm;
+//# sourceMappingURL=npm.js.map

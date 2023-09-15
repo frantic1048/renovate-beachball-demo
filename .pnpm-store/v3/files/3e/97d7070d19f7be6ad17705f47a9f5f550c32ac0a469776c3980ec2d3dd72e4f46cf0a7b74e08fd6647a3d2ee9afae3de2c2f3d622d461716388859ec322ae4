@@ -1,0 +1,41 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getDefaultOptions = void 0;
+const env_1 = require("../env");
+/**
+ * Default options.
+ * Note that as of writing, this does not actually set values for all "required" BeachballOptions.
+ */
+function getDefaultOptions() {
+    return {
+        access: 'restricted',
+        all: false,
+        authType: 'authtoken',
+        branch: 'origin/master',
+        bump: true,
+        bumpDeps: true,
+        canaryName: undefined,
+        changehint: 'Run "beachball change" to create a change file',
+        command: 'change',
+        defaultNpmTag: 'latest',
+        depth: undefined,
+        disallowedChangeTypes: null,
+        fetch: true,
+        generateChangelog: true,
+        gitTags: true,
+        gitTimeout: undefined,
+        message: '',
+        publish: true,
+        push: true,
+        registry: 'https://registry.npmjs.org/',
+        retries: 3,
+        scope: null,
+        tag: '',
+        timeout: undefined,
+        type: null,
+        version: false,
+        yes: env_1.env.isCI,
+    };
+}
+exports.getDefaultOptions = getDefaultOptions;
+//# sourceMappingURL=getDefaultOptions.js.map

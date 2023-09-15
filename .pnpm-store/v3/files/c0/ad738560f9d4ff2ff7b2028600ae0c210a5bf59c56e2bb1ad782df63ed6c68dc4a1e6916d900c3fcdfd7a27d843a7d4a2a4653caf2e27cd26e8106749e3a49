@@ -1,0 +1,5 @@
+import { BumpInfo } from '../types/BumpInfo';
+import { BeachballOptions } from '../types/BeachballOptions';
+import { PackageInfos } from '../types/PackageInfo';
+export declare function gatherBumpInfo(options: BeachballOptions, packageInfos: PackageInfos): BumpInfo;
+//# sourceMappingURL=gatherBumpInfo.d.ts.map

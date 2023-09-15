@@ -1,0 +1,3 @@
+import { BeachballOptions } from './BeachballOptions';
+export declare type NpmOptions = Required<Pick<BeachballOptions, 'registry'>> & Partial<Pick<BeachballOptions, 'token' | 'authType' | 'access' | 'timeout' | 'verbose'>>;
+//# sourceMappingURL=NpmOptions.d.ts.map

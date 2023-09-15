@@ -1,0 +1,4 @@
+import { BumpInfo } from '../types/BumpInfo';
+import { NpmOptions } from '../types/NpmOptions';
+export declare function getNewPackages(bumpInfo: Pick<BumpInfo, 'modifiedPackages' | 'packageInfos'>, options: NpmOptions): Promise<string[]>;
+//# sourceMappingURL=getNewPackages.d.ts.map

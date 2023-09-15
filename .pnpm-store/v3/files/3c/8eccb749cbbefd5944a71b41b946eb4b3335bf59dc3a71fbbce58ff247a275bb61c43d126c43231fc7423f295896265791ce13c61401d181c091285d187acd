@@ -1,0 +1,6 @@
+import { PackageInfos } from '../types/PackageInfo';
+import { BeachballOptions } from '../types/BeachballOptions';
+import { BumpInfo } from '../types/BumpInfo';
+import { ChangeSet } from '../types/ChangeInfo';
+export declare function writeChangelog(options: BeachballOptions, changeFileChangeInfos: ChangeSet, calculatedChangeTypes: BumpInfo['calculatedChangeTypes'], dependentChangedBy: BumpInfo['dependentChangedBy'], packageInfos: PackageInfos): Promise<void>;
+//# sourceMappingURL=writeChangelog.d.ts.map

@@ -1,0 +1,16 @@
+import { PackageInfos } from '../types/PackageInfo';
+import { PackageChangelog } from '../types/ChangeLog';
+import { BumpInfo } from '../types/BumpInfo';
+import { ChangeSet } from '../types/ChangeInfo';
+/**
+ * Get the preliminary changelog info for each modified package, based on change files and dependent bumps.
+ * @returns Mapping from package name to package changelog.
+ */
+export declare function getPackageChangelogs(params: {
+    changeFileChangeInfos: ChangeSet;
+    calculatedChangeTypes: BumpInfo['calculatedChangeTypes'];
+    dependentChangedBy?: BumpInfo['dependentChangedBy'];
+    packageInfos: PackageInfos;
+    cwd: string;
+}): Record<string, PackageChangelog>;
+//# sourceMappingURL=getPackageChangelogs.d.ts.map

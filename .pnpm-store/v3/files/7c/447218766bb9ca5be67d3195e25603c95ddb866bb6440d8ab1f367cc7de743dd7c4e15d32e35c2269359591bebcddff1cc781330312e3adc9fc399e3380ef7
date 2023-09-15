@@ -1,0 +1,31 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.mergeChangelogs = void 0;
+const generateTag_1 = require("../git/generateTag");
+/**
+ * Merge multiple package changelogs into one.
+ * `name` and `version` will use the values from `primaryPackage`'s changelog.
+ * `comments` are merged. `date` will be now.
+ */
+function mergeChangelogs(changelogs, primaryPackage) {
+    if (changelogs.length < 1 || !primaryPackage) {
+        return undefined;
+    }
+    const result = {
+        name: primaryPackage.name,
+        version: primaryPackage.version,
+        tag: (0, generateTag_1.generateTag)(primaryPackage.name, primaryPackage.version),
+        date: new Date(),
+        comments: {},
+    };
+    changelogs.forEach(changelog => {
+        Object.keys(changelog.comments).forEach(changeType => {
+            if (changelog.comments[changeType]) {
+                result.comments[changeType] = (result.comments[changeType] || []).concat(changelog.comments[changeType]);
+            }
+        });
+    });
+    return result;
+}
+exports.mergeChangelogs = mergeChangelogs;
+//# sourceMappingURL=mergeChangelogs.js.map
