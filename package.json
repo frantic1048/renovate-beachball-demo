@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/ecraig12345/renovate-beachball-demo"
   },
-  "packageManager": "pnpm@8.7.0",
+  "packageManager": "pnpm@8.10.2",
   "scripts": {
     "change": "beachball change",
     "checkchange": "beachball check",
@@ -17,6 +17,6 @@
     "packages/*"
   ],
   "devDependencies": {
-    "beachball": "2.22.2"
+    "beachball": "2.39.0"
   }
 }
