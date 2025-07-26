@@ -2,6 +2,6 @@
   "name": "@renovate-beachball-demo/pkg1",
   "dependencies": {
     "react": "17.0.2",
-    "vue": "2"
+    "vue": "3"
   }
 }
